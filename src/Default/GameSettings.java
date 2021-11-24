@@ -18,6 +18,8 @@ public class GameSettings extends JFrame implements ActionListener {
 
     public static String totalQuestionsString;
     public static String getTotalQuestionsString() {return totalQuestionsString;}
+    public static String totalRoundsString;
+    public static String getTotalRoundsString() {return totalRoundsString;}
 
     LoadQuestionsAndRounds loadQuestionsAndRounds = new LoadQuestionsAndRounds();
     JComboBox comboBox;
@@ -33,6 +35,7 @@ public class GameSettings extends JFrame implements ActionListener {
         comboBox2 = new JComboBox(LoadQuestionsAndRounds.getProperty("Rounds:").split(","));
         this.add(comboBox2);
         comboBox.addActionListener(this);
+        comboBox2.addActionListener(this);
         startGameButton = new JButton("Starta spel");
         this.add(startGameButton);
         startGameButton.addActionListener(this);
@@ -56,9 +59,24 @@ public class GameSettings extends JFrame implements ActionListener {
             totalQuestionsString = (String) this.comboBox.getSelectedItem();
         }
 
-        if (e.getSource() == startGameButton)
-        {this.setVisible(false);
-           new Quiz();
+        if (e.getSource() == comboBox2)
+        {
+            totalRoundsString = (String) this.comboBox2.getSelectedItem();
+        }
+
+        if (e.getSource() == startGameButton) {
+
+            if (comboBox.getSelectedItem().equals("FRÅGOR"))  {
+                JOptionPane.showMessageDialog(null, "Ange antal frågor");
+            }
+            else if ( comboBox2.getSelectedItem().equals("RONDER"))
+            {
+                JOptionPane.showMessageDialog(null, "Ange antal ronder");
+            }
+            else {
+                this.setVisible(false);
+                new Quiz();
+            }
         }
 
 

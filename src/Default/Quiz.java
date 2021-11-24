@@ -8,23 +8,28 @@ import java.awt.event.ActionListener;
 public class Quiz implements ActionListener {
 
     String[] questions = {
-            "Vad heter huvudstaden i Brasilien? ", "Vem är president i USA?"
+            "Vad heter huvudstaden i Brasilien? ", "Vem är president i USA?","Vad heter vår fantastiska lärare?","Vad är det största däggdjuret?"
 
 
     };
 
-    String [] genre = {"Geografi", "Samhällskunskap"};
+    String [] genre = {"Geografi", "Samhällskunskap", "Matte", "NO"};
 
 
 
     String[][] answerOptions = {
             {"Stockholm", "Buenos Aires", "Sao Paul", "Brasilia"},
-            {"Donald Trump", "Kamala Harris", "Joe Biden", "John F.Kennedy"}
+            {"Donald Trump", "Kamala Harris", "Joe Biden", "John F.Kennedy"},
+            {"Sigrid", "Sigrun", "Sigrud", "Sigrug"},
+            {"Häst", "Elefant", "Blåval", "Hund"}
+
 
     };
     String[] correctAnswers = {
             "D",
             "C",
+            "B",
+            "C"
 
     };
 
@@ -32,6 +37,8 @@ public class Quiz implements ActionListener {
     int index;
     int correctGuesses = 0;
     private final int totalQuestions = Integer.parseInt(GameSettings.getTotalQuestionsString());
+    private final int totalRounds = Integer.parseInt(GameSettings.getTotalRoundsString());
+
 
     int seconds = 10;
 
@@ -159,10 +166,23 @@ public class Quiz implements ActionListener {
         nextQuestion();
     }
 
+    int roundCounter = 0;
+
     public void nextQuestion() {
-        if (index >= totalQuestions) {
+        if (index >= (totalQuestions*totalRounds)) {
             results();
-        } else {
+
+
+        }
+
+        else {
+
+
+
+            if (index == totalQuestions)
+            {
+                JOptionPane.showMessageDialog(null, "Ronden  är slut, din poäng är: " + correctGuesses);
+            }
 
             questionField.setText(questions[index]);
             genreField.setText(genre[index]);
@@ -276,7 +296,7 @@ public class Quiz implements ActionListener {
         timeLeft.setVisible(false);
         timeLabel.setVisible(false);
 
-        scoreofRound.setText(correctGuesses + " rätt av " + totalQuestions + " möjliga");
+        scoreofRound.setText(correctGuesses + " rätt av " + (totalQuestions * totalRounds) + " möjliga");
         if((double)correctGuesses/(double)totalQuestions>0.5) {
             congratulations.setText("BRA JOBBAT!!");
         }
